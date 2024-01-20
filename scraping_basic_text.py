@@ -1,5 +1,10 @@
 from selenium import webdriver
 
+# if got some chrome issue need to add service driver
+# from selenium.webdriver.chrome.service import Service
+# service = Service("path_to_chrome_driver")
+# driver = webdriver.Chrome(options=options, service=service)
+
 def get_driver():
     options = webdriver.ChromeOptions()
     options.add_argument('disable-infobars') #this will datable info bars.
