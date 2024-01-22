@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys 
+import datetime
 import time
 
 def get_driver():
@@ -15,6 +16,20 @@ def get_driver():
     web_page_url = "https://automated.pythonanywhere.com/login"
     driver.get(web_page_url)
     return driver
+
+def save_text_in_file(element):
+    counter = 5
+    while(counter > 0):
+        time.sleep(2)
+        text = element.text
+        cleaned_txt = extract_number_from_txt(text)
+        ts = datetime.datetime.now().timestamp()
+        with open(f'{ts}.txt', 'w') as f:
+            f.write(cleaned_txt)
+        counter = counter - 1
+        print(counter)
+
+
 
 def extract_number_from_txt(string):
     return string.split(": ")[1]
@@ -35,8 +50,8 @@ def main():
     driver.find_element(by = 'xpath', value="/html/body/nav/div/a")
     print(driver.current_url) # checking the current url of the webpage.
 
-    # scraping the value single time after login
+    # scraping the text after 2 sec and save it into seprate file wi        
     element = driver.find_element(by='id',value = 'displaytimer')
-    return "scraped value is: " + extract_number_from_txt(element.text)
+    save_text_in_file(element)
 
 print(main())
